@@ -1,0 +1,6 @@
+dada2_16S/
+*.err
+*.out
+dada2_ITS2/
+db_files/
+example/
