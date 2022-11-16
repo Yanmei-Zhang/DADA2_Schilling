@@ -129,9 +129,9 @@ sbatch dada2_setup.sh
 
 ### Run dada2 workflow for ITS2 amplicon data
 
-In this tutorial I have included an [example data](https://github.com/Yanmei-Zhang/dada2_SchillingLab/tree/main/example/ITS2) of ITS2 amplicon from Illumina Miseq 2x300. This data set contains six decayed wood samples from Cloquet. 
+In this tutorial I have included an [example data](https://github.com/Yanmei-Zhang/DADA2_Schilling/tree/main/example/ITS2) of ITS2 amplicon from Illumina Miseq 2x300. This data set contains six decayed wood samples from Cloquet. 
 
-*Option 1:* In an interactive job run, [here](https://github.com/Yanmei-Zhang/dada2_SchillingLab/wiki/The-dada2-ITS-Pipeline-for-Pair_ended-Reads) is the step-by-step illustration of the dada2 ITS2 pipeline in Rstudio. Pay attention to dada2 filter and trim parameters for ITS amplicon processing. 
+*Option 1:* In an interactive job run, [here](https://github.com/Yanmei-Zhang/DADA2_Schilling/wiki/The-dada2-ITS-Pipeline-for-Pair_ended-Reads) is the step-by-step illustration of the dada2 ITS2 pipeline in Rstudio. Pay attention to dada2 filter and trim parameters for ITS amplicon processing. 
 
 *Option 2:* In a batch job run, submit the script using Slurm. If you have learned well of each step, optimized the parameters of each step, this is really efficient especially if you have large dataset and can save your a lot of time! 
 
@@ -141,9 +141,9 @@ sbatch dada2_its2.sh
 
 ### Run dada2 workflow for 16s amplicon data
 
-In this tutorial I have included an [example data](https://github.com/Yanmei-Zhang/dada2_SchillingLab/tree/main/example/16S) of 16s amplicon from Illumina Miseq 2x300. This data set contains six decayed wood samples from Cloquet. 
+In this tutorial I have included an [example data](https://github.com/Yanmei-Zhang/DADA2_Schilling/tree/main/example/16S) of 16s amplicon from Illumina Miseq 2x300. This data set contains six decayed wood samples from Cloquet. 
 
-*Option 1:* In an interactive job run, [here](https://github.com/Yanmei-Zhang/dada2_SchillingLab/wiki/The-dada2-Pipeline-for-16s-Amplicon-Pair_ended-Reads) is the step-by-step illustration of the dada2 pipeline in Rstudio. 
+*Option 1:* In an interactive job run, [here](https://github.com/Yanmei-Zhang/DADA2_Schilling/wiki/The-dada2-Pipeline-for-16s-Amplicon-Pair_ended-Reads) is the step-by-step illustration of the dada2 pipeline in Rstudio. 
 
 *Option 2:* In a batch job run, submit the script using Slurm. If you have learned well of each step, optimized the parameters of each step, this is really efficient especially if you have large dataset and can save your a lot of time! 
 
