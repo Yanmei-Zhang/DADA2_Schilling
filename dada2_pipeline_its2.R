@@ -123,8 +123,8 @@ if( length(cutFs) <= 10) {
 }
 
 if(!dir.exists(filter.fp)) dir.create(filter.fp)
-ggsave(paste0(filter.fp, "/its2_fwd_qual_10.pdf"), fwd_qual_plots)
-ggsave(paste0(filter.fp, "/its2_rev_qual_10.pdf"), rev_qual_plots)
+ggsave(paste0(filter.fp, "/its2_fwd_qual_10.png"), fwd_qual_plots)
+ggsave(paste0(filter.fp, "/its2_rev_qual_10.png"), rev_qual_plots)
 
 # Put filtered reads into separate sub-directories for big data workflow
 subF.fp <- file.path(filter.fp, "filt_F") 
@@ -149,8 +149,8 @@ errR <- learnErrors(filtRs, multithread = TRUE)
 errF_plot <- plotErrors(errF, nominalQ = TRUE) 
 errR_plot <- plotErrors(errR, nominalQ=TRUE)
 
-ggsave(paste0(filter.fp, "/its2_errF_plot.pdf"), errF_plot)
-ggsave(paste0(filter.fp, "/its2_errR_plot.pdf"), errR_plot)
+ggsave(paste0(filter.fp, "/its2_errF_plot.png"), errF_plot)
+ggsave(paste0(filter.fp, "/its2_errR_plot.png"), errR_plot)
 
 # Dereplicate identical reads
 derepFs <- derepFastq(filtFs, verbose = TRUE)
