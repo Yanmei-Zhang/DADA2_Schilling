@@ -31,7 +31,7 @@ table.fp <- file.path(work.path, "02_tabletax")
 
 ## 1. Run dada2 pipeline 
 
-### 1.1 Filter and Trim
+### 1.1 Inspect Read Quality Profiles
 
 # Inspect read quality profiles
 # If the number of samples is 10 or less, plot them all, otherwise, just plot 10 randomly selected samples
@@ -55,6 +55,8 @@ subR.fp <- file.path(filter.fp, "filt_R")
 dir.create(subF.fp)
 dir.create(subR.fp)
 
+### 1.2 Filter and Trim
+
 # Filter and Trim
 filtFs <- file.path(subF.fp, paste0(sample.names, "_F_filt.fastq.gz"))
 filtRs <- file.path(subR.fp, paste0(sample.names, "_R_filt.fastq.gz"))
@@ -68,7 +70,7 @@ out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft=c(19,20), truncLen=c(2
 head(out)
 
 
-### 1.2 Infer Sequence Variants and Merge
+### 1.3 Infer Sequence Variants and Merge
 
 # Learn the Error Rates
 errF <- learnErrors(filtFs, multithread = TRUE)
@@ -109,7 +111,7 @@ dim(seqtab2)
 # Inspect distribution of sequence lengths
 table(nchar(getSequences(seqtab2)))
 
-### 1.3 Remove Chimeras and Summary of Reads
+### 1.4 Remove Chimeras and Summary of Reads
 
 # Remove Chimeras 
 seqtab.nochim <- removeBimeraDenovo(seqtab2, method="consensus", multithread=TRUE, verbose=TRUE)
@@ -131,7 +133,7 @@ if(!dir.exists(table.fp)) dir.create(table.fp)
 write.table(t(seqtab.nochim), paste0(table.fp, "/dada2_16s_counts.txt"), sep="\t", quote=F, row.names=T)
 write.table(track , paste0(table.fp, "/dada2_16s_track.txt"), sep="\t", quote=F, row.names = T)
 
-### 1.4 Assign Taxonomy
+### 1.5 Assign Taxonomy
 
 # Assign taxonomy
 taxa <- assignTaxonomy(seqtab.nochim, "~/dada2_tutorial/db_files/silva_nr99_v138.1_train_set.fa.gz", multithread=TRUE, tryRC = TRUE)
