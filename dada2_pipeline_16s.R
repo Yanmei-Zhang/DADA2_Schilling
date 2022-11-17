@@ -72,7 +72,11 @@ head(out)
 
 ### 1.3 Infer Sequence Variants and Merge
 
+#### Learn the Error Rates
+
 # Learn the Error Rates
+# Set seed to ensure that randomized steps can be replicated
+set.seed(100)
 errF <- learnErrors(filtFs, multithread = TRUE)
 errR <- learnErrors(filtRs, multithread = TRUE)
 
@@ -81,6 +85,8 @@ errR_plot <- plotErrors(errR, nominalQ=TRUE)
 
 ggsave(paste0(filter.fp, "/16s_errF_plot.png"), errF_plot)
 ggsave(paste0(filter.fp, "/16s_errR_plot.png"), errR_plot)
+
+#### Dereplication, Sequence Inference, and Merging of paired-end Reads
 
 # Dereplicate identical reads
 derepFs <- derepFastq(filtFs, verbose = TRUE)
