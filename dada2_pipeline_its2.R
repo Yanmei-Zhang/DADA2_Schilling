@@ -136,7 +136,7 @@ subR.fp <- file.path(filter.fp, "filt_R")
 dir.create(subF.fp)
 dir.create(subR.fp)
 
-### 2.1 Filter and Trim
+### 2.2 Filter and Trim
 
 # Filter and Trim
 filtFs <- file.path(subF.fp, basename(cutFs))
@@ -147,6 +147,8 @@ out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, maxN = 0, maxEE = c(2, 5),
 head(out)
 
 ### 2.3 Infer Sequence Variants and Merge
+
+#### Learn the Error Rates
 
 # Set seed to ensure that randomized steps can be replicated
 set.seed(100)
@@ -159,6 +161,8 @@ errR_plot <- plotErrors(errR, nominalQ=TRUE)
 
 ggsave(paste0(filter.fp, "/its2_errF_plot.png"), errF_plot)
 ggsave(paste0(filter.fp, "/its2_errR_plot.png"), errR_plot)
+
+#### Dereplication, sequence inference, and merging of paired-end reads
 
 # Dereplicate identical reads
 derepFs <- derepFastq(filtFs, verbose = TRUE)
