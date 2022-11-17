@@ -22,8 +22,6 @@ fnRs <- sort(list.files(data.path, pattern = "_R2_001.fastq.gz", full.names = TR
 # Set up work path in YOUR directory where you want data; you can also use the same path as the data is in, but it was nice to keep the data folder as original and store the processed data in another folder. 
 work.path <- "~/dada2_tutorial/dada2_ITS2" # Change it to YOUR work path
 
-## 1. Pre-processing data for dada2 -  remove sequences with Ns, remove primers with cutadapt
-
 # Set up names of sub directories to stay organized
 preprocess.fp <- file.path(work.path, "01_preprocess")
 filtN.fp <- file.path(preprocess.fp, "filtN")
@@ -31,10 +29,22 @@ cut.fp <- file.path(preprocess.fp, "cutadapt")
 filter.fp <- file.path(work.path, "02_filter") 
 table.fp <- file.path(work.path, "03_tabletax") 
 
+## 1. Pre-processing data for dada2 -  remove sequences with Ns, remove primers with cutadapt
+
+### 1.1 Remove Sequences with Ns
+
+# “Pre-filter” the sequences just to remove those with Ns, but perform no other filtering.
+fnFs.filtN <- file.path(preprocess.fp, "filtN", basename(fnFs)) # Put N-filterd files in filtN/ subdirectory
+fnRs.filtN <- file.path(preprocess.fp, "filtN", basename(fnRs))
+trimN <- filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN, maxN = 0, multithread = TRUE)
+head(trimN)
+
+### 1.2 Remove Primers
+
 # Identify primers
 FWD <- "TCGATGAAGAACGCAGCG" #5.8SR # Change it to YOUR sequencing primer
 REV <- "TCCTCCGCTTATTGATATGC" #ITS4 # Change it to YOUR sequencing primer
-
+# A function to create a list of all orientations of primers
 allOrients <- function(primer) {
   # Create all orientations of the input sequence
   require(Biostrings)
@@ -48,13 +58,7 @@ REV.orients <- allOrients(REV)
 FWD.orients
 REV.orients
 
-# “Pre-filter” the sequences just to remove those with Ns, but perform no other filtering.
-fnFs.filtN <- file.path(preprocess.fp, "filtN", basename(fnFs)) # Put N-filterd files in filtN/ subdirectory
-fnRs.filtN <- file.path(preprocess.fp, "filtN", basename(fnRs))
-trimN <- filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN, maxN = 0, multithread = TRUE)
-head(trimN)
-
-# Count the number of times the primers appear in the forward and reverse read, while considering all possible primer orientations. 
+# A function to count the number of times the primers appear in the forward and reverse read, while considering all possible primer orientations.
 primerHits <- function(primer, fn) {
   # Counts number of reads in which the primer is found
   nhits <- vcountPattern(primer, sread(readFastq(fn)), fixed = FALSE)
@@ -109,7 +113,7 @@ if(!identical(sample.names, sample.namesR)) stop("Forward and reverse files do n
 
 ## 2. Run dada2 pipeline 
 
-### 2.1 Filter and Trim
+### 2.1 Inspect Read Quality Profiles
 
 # Inspect read quality profiles
 # If the number of samples is 10 or less, plot them all, otherwise, just plot 10 randomly selected samples
@@ -132,6 +136,8 @@ subR.fp <- file.path(filter.fp, "filt_R")
 dir.create(subF.fp)
 dir.create(subR.fp)
 
+### 2.1 Filter and Trim
+
 # Filter and Trim
 filtFs <- file.path(subF.fp, basename(cutFs))
 filtRs <- file.path(subR.fp, basename(cutRs))
@@ -140,8 +146,10 @@ out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, maxN = 0, maxEE = c(2, 5),
                      truncQ = 2, minLen = 50, rm.phix = TRUE, compress = TRUE, multithread = TRUE)  # on windows, set multithread = FALSE
 head(out)
 
-### 2.2 Infer Sequence Variants and Merge
+### 2.3 Infer Sequence Variants and Merge
 
+# Set seed to ensure that randomized steps can be replicated
+set.seed(100)
 # Learn the Error Rates
 errF <- learnErrors(filtFs, multithread = TRUE)
 errR <- learnErrors(filtRs, multithread = TRUE)
@@ -176,7 +184,7 @@ dim(seqtab)
 # Inspect distribution of sequence lengths
 table(nchar(getSequences(seqtab)))
 
-### 2.3 Remove Chimeras and Summary of Reads
+### 2.4 Remove Chimeras and Summary of Reads
 
 # Remove Chimeras 
 seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=TRUE)
@@ -198,7 +206,7 @@ if(!dir.exists(table.fp)) dir.create(table.fp)
 write.table(t(seqtab.nochim), paste0(table.fp, "/dada2_its2_counts.txt"), sep="\t", quote=F, row.names=T)
 write.table(track , paste0(table.fp, "/dada2_its2_track.txt"), sep="\t", quote=F, row.names = T)
 
-### 2.4 Assign Taxonomy
+### 2.5 Assign Taxonomy
 
 # Assign taxonomy
 unite.ref <- "~/dada2_tutorial/db_files/sh_general_release_dynamic_16.10.2022.fasta"  # Change it to location on YOUR device
