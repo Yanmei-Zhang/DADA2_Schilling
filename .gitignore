@@ -1,8 +1,5 @@
 *.err
 *.out
 db_files/
-example/
 dada2_its2_1.sh
 dada2_16s_1.sh
-dada2_ITS2/
-dada2_16S/
