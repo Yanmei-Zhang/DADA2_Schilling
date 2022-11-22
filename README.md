@@ -29,7 +29,9 @@ This pipeline runs the dada2 workflow for amplicon dataset from R on the HPC ser
 
 **First, you need log into the wasabi ot mangi server through Schilling Lab:**
 
-`ssh yourMSIusername@resourcename.msi.umn.edu`
+```bash
+ssh yourMSIusername@resourcename.msi.umn.edu
+```
 
 Replace yourMSIusername with your MSI username (x500) and resourcename with the MSI resource that you wish to connect to (such as mesabi, mangi, etc). If you don't have access to MSI, you need your PI or gdesignated Group Administrator to add you the group.
 
