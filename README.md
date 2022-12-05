@@ -10,13 +10,13 @@ This pipeline runs the dada2 workflow for amplicon dataset from R on the HPC ser
 
 1. Check the primer set you used for sequencing and make sure the length of your target "Amplicon". This can vary between primer sets, as well as within primer sets. For example, ITS is higly variable in length even amplified using the same primer sers, which has a significant influence on the slection of sequencing platform and parameters for dada2 filtering and trimming steps.
    
-   In this tutorial as one of the example, we will use the primers 5.8S and ITS4 to amplify the ITS2 region, which commnonly range from 100-500 bp.
+   In this tutorial as one of the example, we will use the primers 5.8SR and ITS4 to amplify the ITS2 region, which commnonly range from 100-500 bp.
 
    *5.8SR*: "TCGATGAAGAACGCAGCG" # Change it to YOUR primer
 
    *ITS4*: "TCCTCCGCTTATTGATATGC" # Change it to YOUR primer
 
-2. Check the sequencing platform you used and make sure your read length. When you choose paired-end sequencing and try to merge the paired end reads, make sure the read length is long enough to allow for substantial overlap between the forward and reverse read. For example, with a MiSeq 2 x 300 bp run, if we assume a minimum of 20 bp overlap, you will get a maximum fragment length of 542 bp (300+300-17-20-20=542). This will work for ITS2.
+2. Check the sequencing platform you used and make sure your read length. When you choose paired-end sequencing and try to merge the paired end reads, make sure the read length is long enough to allow for substantial overlap between the forward and reverse read. For example, with a MiSeq 2 x 300 bp run, if we assume a minimum of 20 bp overlap, you will get a maximum fragment length of 542 bp (300+300-17-20-20=542). There are 154,712 ITS2 sequences in UNITE, and 154,567 (99.9%) has a length less than 542 bp. So 2 x 300 bp sequencing run would work for ITS2.
 
    In this tutorial as an example, the sequence data were from Illumina MiSeq 2 x 300 bp run, which will generate bidirectional reads of 300 bp.
 
