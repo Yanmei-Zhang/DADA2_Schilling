@@ -29,4 +29,9 @@ wget https://github.com/UMNFuN/FUNGuild/archive/refs/heads/master.zip
 unzip master.zip
 rm master.zip
 
+# Download the Silva reference database for 16S
+
+wget https://zenodo.org/record/4587955/files/silva_nr99_v138.1_train_set.fa.gz
+wget https://zenodo.org/record/4587955/files/silva_species_assignment_v138.1.fa.gz
+
 cd ..
